@@ -4,7 +4,7 @@ This is the folder aimed to make development and deployment flexible across diff
 
 ## Quick Start (in development mode)
 ```
-    docker-compose -f production/common.yml -f production/metrics.yml -f production/nfdi4ds.yml -f development/dev.nfdi4ds-quickstart.yml
+    docker-compose -f production/common.yml -f production/metrics.yml -f production/nfdi4ds.yml -f development/dev.nfdi4ds-quickstart.yml up -d
 
     # create all possible catalogs
    ./run.sh -p nfdi4ds -c create_catalogs --skip-dry-run --dev
