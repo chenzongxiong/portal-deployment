@@ -1,0 +1,39 @@
+header:
+  id: 9f391550-37dd-4428-b75e-38d588c13d97
+  name: nomad-fairmat
+  title: Harvester - NOMAD Repository
+  version: "2.0.0"
+  transport: payload
+body:
+  segments:
+    - header:
+        name: piveau-consus-importing-nomad
+        segmentNumber: 1
+        title: Importing NOMAD
+        processed: false
+      body:
+        config:
+          address: https://nomad-lab.eu/prod/v1/staging
+          catalogue: nomad-fairmat
+          maxEntries: 1000
+          queries:
+            owner: public
+            pageSize: 100
+    - header:
+        name: piveau-consus-transforming-xslt
+        segmentNumber: 2
+        title: Transforming XSLT
+        processed: false
+      body:
+        config:
+          single: true
+          scriptType: localFile
+          path: dcat-injection.xslt
+          params:
+            categories: "TECH"
+    - header:
+        name: piveau-consus-exporting-hub
+        segmentNumber: 3
+        title: Exporting hub
+        processed: false
+      body: {}

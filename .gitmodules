@@ -1,0 +1,3 @@
+[submodule "dcat-converter"]
+	path = dcat-converter
+	url = git@gitlab.fokus.fraunhofer.de:bua-bop/dcat-converter.git

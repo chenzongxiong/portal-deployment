@@ -1,0 +1,14 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/github-nfdi4bioimage>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4BioImage GitHub"@de ;
+  dc:title "NFDI4BioImage GitHub"@en ;
+  dc:description "Forschungsdatenmanagement für Mikroskopie und Biobildanalyse
+"@de ;
+  dc:description "Research Data Management for Microscopy and BioImage Analysis"@en ;
+  dc:type "dcat-ap"^^xsd:string .

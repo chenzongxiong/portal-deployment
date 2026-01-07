@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/github-mardi>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "MaRDI GitHub"@de ;
+  dc:title "MaRDI GitHub"@en ;
+  dc:description "Die Mathematical Research Data Initiative (MaRDI) ist eine Initiative der mathematischen Wissenschaft. Wir setzen uns für eine faire Datenkultur und faire Forschungsabläufe ein."@de ;
+  dc:description "The Mathematical Research Data Initiative (MaRDI) is the initiative of mathematical science. We embrace a FAIR data culture and research workflow."@en ;
+  dc:type "dcat-ap"^^xsd:string .

@@ -1,0 +1,15 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-nfdi4biodiversity>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4Biodiversity YouTube"@de ;
+  dc:title "NFDI4Biodiversity YouTube"@en ;
+  dc:description "NFDI4Biodiversity ist ein Netzwerk von rund 50 Akteuren aus Forschungseinrichtungen, Verbänden, naturkundlichen Fachgesellschaften, Landesämtern und zivilgesellschaftlichen Initiativen, die eines eint: das Erheben von und Arbeiten mit Biodiversitätsdaten. Ziel ist es, diese Daten mithilfe einer gemeinsam entwickelten Dateninfrastruktur für Forschung und Praxis verfügbar zu machen – um Akteuren aus Wissenschaft, Politik und Naturschutz verlässliche Daten zur Verfügung zu stellen, auf deren Grundlage sich bessere Beiträge zum Erhalt der Artenvielfalt erarbeiten lassen.
+Auf unserem YouTube-Channel bieten wir Einblicke in unsere Arbeit, veröffentlichen Mitschnitte unserer jährlichen Konferenzen und stellen Tutorials zum Thema Datenmanagement zur Verfügung."@de ;
+  dc:description "NFDI4Biodiversity is a network of around 50 stakeholders from research institutions, associations, natural history societies, state agencies, and civil society initiatives who share one thing: collecting and working with biodiversity data. The goal is to make this data available for research and practice using a jointly developed data infrastructure – to provide stakeholders from science, politics, and nature conservation with reliable data that can be used to develop better contributions to biodiversity conservation.
+On our YouTube channel, we offer insights into our work, publish recordings of our annual conferences, and provide tutorials on data management."@en ;
+  dc:type "dcat-ap"^^xsd:string .

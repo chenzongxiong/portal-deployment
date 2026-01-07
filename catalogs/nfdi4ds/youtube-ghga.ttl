@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-ghga>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "GHGA YouTube"@de ;
+  dc:title "GHGA YouTube"@en ;
+  dc:description "YouTube-Kanal für GHGA"@de ;
+  dc:description "YouTube Channel for GHGA"@en ;
+  dc:type "dcat-ap"^^xsd:string .

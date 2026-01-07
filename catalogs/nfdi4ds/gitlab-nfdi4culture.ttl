@@ -1,0 +1,16 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/gitlab-nfdi4culture>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4Culture GitLab"@de ;
+  dc:title "NFDI4Culture GitLab"@en ;
+  dc:description "Dies ist eine Gruppe zur Organisation der technischen Entwicklung über mehrere Aufgabenbereiche hinweg innerhalb des größeren NFDI4Culture-Projekts: https://nfdi4culture.de/what-we-do/task-areas.html"@de ;
+  dc:description "This is a group to organize technical development across several task areas within the larger NFDI4Culture project: https://nfdi4culture.de/what-we-do/task-areas.html
+"@en ;
+  # dc:isPartOf <https://meta4ds.fokus.fraunhofer.de/catalogues/gitlab> ;
+  # dc:isPartOf <http://localhost:8080/catalogues/gitlab> ;
+  dc:type "dcat-ap"^^xsd:string .

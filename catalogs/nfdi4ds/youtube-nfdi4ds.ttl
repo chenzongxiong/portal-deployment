@@ -1,0 +1,21 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-nfdi4ds>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4DS YouTube"@de ;
+  dc:title "NFDI4DS YouTube"@en ;
+  dc:description "Wir sind das fehlende Bindeglied
+
+Die Vision von NFDI4DataScience (NFDI4DS) ist es, alle Schritte des komplexen und interdisziplinären Forschungsdatenlebenszyklus zu unterstützen, einschließlich der Erfassung/Erstellung, Verarbeitung, Analyse, Veröffentlichung, Archivierung und Wiederverwendung von Ressourcen in Data Science und Künstlicher Intelligenz.
+
+Das übergeordnete Ziel ist die Entwicklung, der Aufbau und die Aufrechterhaltung einer nationalen Forschungsdateninfrastruktur (NFDI) für die Data Science- und Künstliche Intelligenz-Community in Deutschland. Dies wird auch einer breiteren Community, die Datenanalyselösungen benötigt, innerhalb und außerhalb der NFDI Vorteile bringen."@de ;
+  dc:description "We are the missing link
+
+The vision of NFDI4DataScience (NFDI4DS) is to support all steps of the complex and interdisciplinary research data lifecycle, including collecting/creating, processing, analyzing, publishing, archiving, and reusing resources in Data Science and Artificial Intelligence.
+
+The overarching objective is the development, establishment, and sustainment of a national research data infrastructure NFDI for the Data Science and Artificial Intelligence community in Germany. This will also deliver benefits for a wider community requiring data analytics solutions, within the NFDI and beyond."@en ;
+  dc:type "dcat-ap"^^xsd:string .

@@ -1,0 +1,162 @@
+services:
+  piveau-metrics-validating-shacl:
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-validating-shacl:4.2.4
+    container_name: piveau-metrics-validating-shacl
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8182:8080
+    environment:
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-metrics-cache:
+    # image: registry.gitlab.com/piveau/metrics/piveau-metrics-cache:5.6.11
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-cache:5.8.1
+    container_name: piveau-metrics-cache
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8181:8080
+    environment:
+      - MONGODB_CONNECTION=mongodb://mongo:27017
+      - CACHE_APIKEY=doesnotmatter
+      - PIVEAU_TRIPLESTORE_CONFIG={"address":"http://virtuoso:8890", "password":"dba"}
+      - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"http://localhost:8080/","datasetContext":"datasets/","catalogueContext":"catalogues/","distributionContext":"set/distribution/","historyMetricsContext":"id/history_metrics/","metricsContext":"id/metrics/","recordContext":"set/record/"}
+      - CACHE_CORS_DOMAINS=["localhost","meta4ds.fokus.fraunhofer.de","nfdi4dsmetaportal.fokus.fraunhofer.de","quadriga.fokus.fraunhofer.de","meta4cat.fokus.fraunhofer.de","meta4bua.fokus.fraunhofer.de"]
+      - PIVEAU_HUB_AUTHORIZATION_PROCESS_DATA={}
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+    depends_on:
+      - mongo
+
+  piveau-metrics-annotator:
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-annotator:2.1.3
+    container_name: piveau-metrics-annotator
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8183:8080
+    environment:
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-metrics-accessibility:
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-accessibility:2.1.7
+    container_name: piveau-metrics-accessibility
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8184:8080
+    environment:
+      - PIVEAU_ACCESSIBILITY_PERSISTENCE_CONFIG={"mongoDbClient":{"connection_string":"mongodb://mongo:27017"},"collection":"datasets"}
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+      - PIVEAU_PIPE_LOG_LEVEL=TRACE
+    depends_on:
+      - mongo
+
+  piveau-metrics-score:
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-score:3.2.2
+    container_name: piveau-metrics-score
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8185:8080
+    environment:
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-metrics-ui:
+    image: dockerhub.fokus.fraunhofer.de:5000/zon66711/rdi-piveau-metrics-ui
+    pull_policy: always
+    container_name: piveau-metrics-ui
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8180:8080
+    environment:
+      - VUE_APP_ROOT_API=http://piveau-metrics-cache:8080/
+      - VUE_APP_DATA_URL=http://piveau-hub-repo:8080/
+      - VUE_APP_REPORT_URL=http://piveau-metrics-reporter:8080/
+      - VUE_APP_ROOT_URL=https://data.europa.eu/mqa
+      - VUE_APP_SHACL_VALIDATOR_URL=https://data.europa.eu/mqa/shacl-validator-ui/
+      - VUE_APP_SHACL_API_URL=https://data.europa.eu/api/mqa/shacl
+      - VUE_APP_TRACKER_IS_PIWIK_PRO=false
+      - VUE_APP_TRACKER_TRACKER_URL=
+      - VUE_APP_TRACKER_SITE_ID=
+      - VUE_APP_MATOMO_URL=
+      - VUE_APP_PIWIK_ID=
+      - VUE_APP_SCORING_START_DATE=2020-01-24
+      - VUE_APP_SCORING_STEP_SIZE=10
+      - VUE_APP_SCORING_MAX_POINTS=200
+      - VUE_APP_HISTORY_START_DATE=2020-01-24
+      - VUE_APP_HISTORY_RESOLUTION=month
+      - VUE_APP_COOKIE_DECLINE_LINK=
+
+  piveau-metrics-reporter:
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-reporter
+    container_name: piveau-metrics-reporter
+    logging:
+      options:
+        max-size: "50m"
+    ports:
+      - 127.0.0.1:8188:8080
+    environment:
+      - API_KEY=doesnotmatter
+      - SCHEDULES=[{"languages":["en","de"],"cron":" 0 50 16 1/1 * ? * "},{"languages":["fr","it"],"cron":" 0 55 16 1/1 * ? * "},{"languages":["en","de"],"cron":" 1 0 0 ? * * * "}]
+      - CACHE_CORS_DOMAINS=["localhost","meta4ds.fokus.fraunhofer.de","nfdi4dsmetaportal.fokus.fraunhofer.de"]
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+      - METRICS_CATALOGUES_ADDRESS=http://piveau-metrics-cache:8080
+
+  # piveau-metrics-data-format-linter:
+  #   image: registry.gitlab.com/piveau/metrics/piveau-metrics-data-format-linter
+  #   container_name: piveau-metrics-data-format-linter
+  #   logging:
+  #     options:
+  #       max-size: "50m"
+  #   # restart: always
+
+  # # piveau-metrics-lint-csv:
+  # #   image: registry.gitlab.com/piveau/metrics/piveau-metrics-lint-csv
+  # #   container_name: piveau-metrics-lint-csv
+  # #   logging:
+  # #     options:
+  # #       max-size: "50m"
+  # #   # restart: always
+
+  piveau-metrics-dataset-similarities:
+    image: registry.gitlab.com/piveau/metrics/piveau-metrics-dataset-similarities
+    container_name: piveau-metrics-dataset-similarities
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8187:8080
+    environment:
+      - SPARQL_URL=http://localhost:8890/sparql/
+      - PIVEAU_LOG_LEVEL=trace
+      - PIVEAU_SIMILARITY_CRONDEF="0 0 0 1/1 * ? *"
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - /opt/mongo:/etc/mongo

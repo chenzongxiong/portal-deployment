@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/github-fairmat>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "FAIRmat GitHub"@de ;
+  dc:title "FAIRmat GitHub"@en ;
+  dc:description "Wir entwickeln Software zur Unterstützung der FAIR-Prinzipien in der Festkörperphysik, der chemischen Festkörperphysik und den Materialwissenschaften im Allgemeinen. FAIR steht für eine Reihe von Leitprinzipien, die Daten auffindbar, zugänglich, interoperabel und wiederverwendbar machen. Das FAIRmat-Konsortium ist Teil der Nationalen Forschungsdateninfrastruktur (NFDI) und wird von der Deutschen Forschungsgemeinschaft (DFG, Projekt 460197019) gefördert."@de ;
+  dc:description "We develop software to support the FAIR principles in the field of condensed-matter physics, the chemical physics of solids and materials science in general. FAIR refers to a set of guiding principles to make data Findable, Accessible, Interoperable, and Reusable. The FAIRmat consortium is part of the National Research Data Infrastructure (NFDI) and is funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation | project 460197019)."@en ;
+  dc:type "dcat-ap"^^xsd:string .

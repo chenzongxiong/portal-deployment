@@ -1,0 +1,89 @@
+services:
+  piveau-hub-ui:
+    image: zongxiongchen/rdi-piveau-hub-ui:nfdi4ds
+    environment: !override
+      - VITE_API_BASE_URL=http://127.0.0.1:8084/
+      # hub endpoint
+      - VITE_API_HUB_URL=http://127.0.0.1:8082/
+      # metric cache endpoint
+      - VITE_API_QUALITY_BASE_URL=http://127.0.0.1:8181/
+      - VITE_API_SIMILARITY_BASE_URL=http://127.0.0.1:8187/
+      - VITE_API_SPARQL_URL=http://127.0.0.1:8890/sparql/
+      - VITE_ROUTER_OPTIONS_BASE=/
+      - VITE_ROUTING_NAVIGATION_SHOW_SPARQL=true
+      - VITE_AUTHENTICATION_USE_SERVICE=false
+      - VITE_TITLE=NFDI4Cat
+      - VITE_METADATA_TITLE=NFDI4Cat Meta Portal
+      - VITE_LANGUAGES_LOCALE=en
+      - VITE_LANGUAGES_LANGUAGE_OBJECT={}
+      - VITE_LANGUAGES_USE_LANGUAGE_SELECTOR=true
+      # - VITE_CONTENT_DATASETS_FACETS_DEFAULT_FACET_ORDER='["catalog", "format", "categories", "keywords", "publisher", "dataScope", "country", "dataServices", "scoring", "license"]'
+      - OTEL_SDK_DISABLED=true
+
+  piveau-metrics-ui:
+    image: zongxiongchen/rdi-piveau-metrics-ui:nfdi4ds
+    environment: !override
+      - VUE_APP_ROOT_API=http://127.0.0.1:8181/
+      - VUE_APP_DATA_URL=http://127.0.0.1:8082/
+      - VUE_APP_REPORT_URL=http://127.0.0.1:8188/
+      - VUE_APP_ROOT_URL=https://data.europa.eu/mqa
+      - VUE_APP_SHACL_VALIDATOR_URL=https://data.europa.eu/mqa/shacl-validator-ui/
+      - VUE_APP_SHACL_API_URL=https://data.europa.eu/api/mqa/shacl
+      - VUE_APP_TRACKER_IS_PIWIK_PRO=false
+      - VUE_APP_TRACKER_TRACKER_URL=
+      - VUE_APP_TRACKER_SITE_ID=
+      - VUE_APP_MATOMO_URL=
+      - VUE_APP_PIWIK_ID=
+      - VUE_APP_SCORING_START_DATE=2020-01-24
+      - VUE_APP_SCORING_STEP_SIZE=10
+      - VUE_APP_SCORING_MAX_POINTS=200
+      - VUE_APP_HISTORY_START_DATE=2020-01-24
+      - VUE_APP_HISTORY_RESOLUTION=month
+      - VUE_APP_COOKIE_DECLINE_LINK=
+      - VUE_APP_LANGUAGES_LOCALE=en
+      - VUE_APP_LANGUAGES_FALLBACK_LOCALE=en
+      - VUE_APP_LANGUAGES_LANGUAGE_OBJECT={}
+      - VUE_APP_LANGUAGES_USE_LANGUAGE_SELECTOR=true
+      # - VUE_APP_HEADER_METADATA_QUALITY_SHOW=true
+      # - VUE_APP_HEADER_METADATA_QUALITY_HREF=/mqa
+      - VUE_APP_HEADER_METADATA_QUALITY_SHOW=false
+      - VUE_APP_HEADER_METADATA_QUALITY_HREF=http://localhost:8180/mqa
+      - VUE_APP_HEADER_SPARQL_SHOW=true
+      - VUE_APP_HEADER_SPARQL_HREF=http://localhost:8080/sparql
+      - VUE_APP_HEADER_CATALOGUES_SHOW=true
+      - VUE_APP_HEADER_CATALOGUES_HREF=http://localhost:8080/catalogues
+      - VUE_APP_HEADER_DATASETS_SHOW=true
+      - VUE_APP_HEADER_DATASETS_HREF=http://localhost:8080/datasets
+
+  piveau-consus-scheduling:
+    ports: !override
+      - 8090:8080
+      - 8095:8085
+      - 15000:5000
+
+  piveau-hub-repo:
+    ports: !override
+      - 8082:8080
+      - 8085:8085
+      - 15002:5000
+
+  piveau-hub-search:
+    ports: !override
+      - 8084:8080
+      - 8086:8081
+
+  virtuoso:
+    volumes:
+      - $HOME/.cache/piveau/virtuoso-nfdi4ds:/database
+
+  virtuoso-shadow:
+    volumes:
+      - $HOME/.cache/piveau/virtuoso-shadow-nfdi4ds:/database
+
+  elasticsearch:
+    volumes:
+      - $HOME/.cache/piveau/elasticsearch-nfdi4ds:/usr/share/elasticsearch/data
+
+  mongo:
+    volumes:
+      - $HOME/.cache/piveau/mongo-nfdi4ds:/etc/mongo

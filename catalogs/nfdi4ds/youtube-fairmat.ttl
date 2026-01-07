@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-fairmat>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "FAIRmat YouTube"@de ;
+  dc:title "FAIRmat YouTube"@en ;
+  dc:description "FAIRmat entwickelt eine föderierte Dateninfrastruktur für Materialdaten aus der Festkörperphysik und der chemischen Festkörperphysik mit dem Ziel, Materialdaten auffindbar, zugänglich, interoperabel und wiederverwendbar (FAIR) zu machen. FAIRmat verfolgt einen nutzerorientierten Ansatz und integriert Daten aus Synthese, experimenteller Charakterisierung, Theorie und Berechnungen sowie verschiedenen Anwendungen. FAIRmat betreibt das NOMAD-Labor, das modernste Werkzeuge zur Erfassung, Speicherung, Präsentation und Analyse materialwissenschaftlicher Daten bietet. FAIRmat wird als Konsortium der Deutschen Forschungsdateninfrastruktur NFDI gefördert."@de ;
+  dc:description "FAIRmat is creating a federated data infrastructure for materials data from the field of condensed-matter physics and the chemical physics of solids, with the aim of making materials data Findable, Accessible, Interoperable and Re-purposable (FAIR). Pursuing a user-driven approach, FAIRmat integrates data obtained from synthesis, experimental characterization, theory & computations, and various applications. FAIRmat operates the NOMAD Laboratory, which offers cutting-edge tools for collecting, storing, presenting, and analyzing materials-science data. FAIRmat is funded as a consortium of the German Research-Data Infrastructure NFDI."@en ;
+  dc:type "dcat-ap"^^xsd:string .

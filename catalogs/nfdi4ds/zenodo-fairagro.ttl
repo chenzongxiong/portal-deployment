@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/zenodo-fairagro>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "FAIRagro Zenodo"@de ;
+  dc:title "FAIRagro Zenodo"@en ;
+  dc:description "Zenodo Untegruppe für FAIRagro"@de ;
+  dc:description "Zenodo Subgroup for FAIRagro"@en ;
+  dc:type "dcat-ap"^^xsd:string .

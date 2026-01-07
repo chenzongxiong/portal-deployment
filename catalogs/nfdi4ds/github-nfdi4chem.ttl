@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/github-nfdi4chem>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4Chem GitHub"@de ;
+  dc:title "NFDI4Chem GitHub"@en ;
+  dc:description "NFDI4Chem – Chemie-Konsortium in der NFDI"@de ;
+  dc:description "NFDI4Chem – Chemistry Consortium in the NFDI"@en ;
+  dc:type "dcat-ap"^^xsd:string .

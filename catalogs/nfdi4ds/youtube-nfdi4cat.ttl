@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-nfdi4cat>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4Cat YouTube"@de ;
+  dc:title "NFDI4Cat YouTube"@en ;
+  dc:description "NFDI4Cat ist eine Community- und Nutzerinitiative, die die Transformation der Katalyse und katalysenaher Wissenschaften in die digitale Katalyse beschleunigen will. Wir konzentrieren uns auf offene Wissenschaft, verbessertes Datenmanagement und faire Datennutzung in der Katalyseforschung. Mit unserer vielfältigen Software und Tools, unseren Lehrvideos und Publikationen möchten wir Sie dabei unterstützen, Ihre Forschung schneller voranzutreiben. Unsere Mission ist es, Ihnen eine Infrastruktur für den offenen und fairen Umgang mit Katalysedaten bereitzustellen und Sie bei der erfolgreichen Nutzung (bzw. Anwendung) dieser Daten zu unterstützen."@de ;
+  dc:description "NFDI4Cat is a community- and user-driven initiative that aims to accelerate the transformation of catalysis and catalysis-related sciences into DIGITAL CATALYSIS. We focus on open science, improved data management and FAIR data in catalysis research. Through our various software and tools, to our educational videos and publications, we want to help you move your research forward faster. Our mission is to provide you with an infrastructure for the open and FAIR handling of catalysis data and to help you successfully use (or apply) this data."@en ;
+  dc:type "dcat-ap"^^xsd:string .

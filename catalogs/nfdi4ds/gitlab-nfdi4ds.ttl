@@ -1,0 +1,15 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/gitlab-nfdi4ds>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4DS GitLab"@de ;
+  dc:title "NFDI4DS GitLab"@en ;
+  dc:description "GitLab-Repositories für NFDI4DataScience"@de ;
+  dc:description "GitLab repositories for NFDI4DataScience"@en ;
+  # dc:isPartOf <https://meta4ds.fokus.fraunhofer.de/catalogues/gitlab> ;
+  # dc:isPartOf <http://localhost:8080/catalogues/gitlab> ;
+  dc:type "dcat-ap"^^xsd:string .

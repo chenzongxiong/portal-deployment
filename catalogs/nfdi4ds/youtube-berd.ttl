@@ -1,0 +1,19 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-berd>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "BERD YouTube"@en ;
+  dc:title "BERD YouTube"@de ;
+  dc:description "Learn data science and data management for Business, Economics, and Related Data with a variety of courses, workshops and other educational content.
+More information: https://www.berd-nfdi.de/berd-academy/
+
+BERD Academy is part of BERD@NFDI -- the consortium for Business, Economics and Related Data (BERD) in the National Research Data Infrastructure (NFDI)."@en ;
+  dc:description "Lernen Sie Data Science und Datenmanagement für Wirtschafts- und verwandte Daten mit einer Vielzahl von Kursen, Workshops und anderen Bildungsinhalten.
+Weitere Informationen: https://www.berd-nfdi.de/berd-academy/
+
+Die BERD Academy ist Teil von BERD@NFDI – dem Konsortium für Wirtschafts- und verwandte Daten (BERD) in der Nationalen Forschungsdateninfrastruktur (NFDI)."@de ;
+  dc:type "dcat-ap"^^xsd:string .

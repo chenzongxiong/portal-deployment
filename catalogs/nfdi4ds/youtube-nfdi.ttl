@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-nfdi>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI YouTube"@de ;
+  dc:title "NFDI YouTube"@en ;
+  dc:description "YouTube-Kanal für NFDI"@de ;
+  dc:description "YouTube channel for NFDI"@en ;
+  dc:type "dcat-ap"^^xsd:string .

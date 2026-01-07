@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/repo4cat>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:title "NFDI4Cat Repo4Cat"@de ;
+  dc:title "NFDI4Cat Repo4Cat"@en ;
+  dc:description "Dataverse Repository NFDI4Cat"@de ;
+  dc:description "Dataverse Repository NFDI4Cat"@en ;
+  dc:type "dcat-ap"^^xsd:string .

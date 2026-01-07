@@ -1,0 +1,111 @@
+services:
+  piveau-hub-ui:
+    # image: dockerhub.fokus.fraunhofer.de:5000/quadriga/quadriga-ui:latest
+    # build: ../../rdi-piveau-hub-ui
+    environment: !override
+      - VITE_API_BASE_URL=http://127.0.0.1:8084/
+      - VITE_API_HUB_URL=http://127.0.0.1:8082/
+      - VITE_API_QUALITY_BASE_URL=http://127.0.0.1:8181/
+      - VITE_API_SIMILARITY_BASE_URL=http://127.0.0.1:8187/
+      - VITE_API_SPARQL_URL=http://127.0.0.1:8890/sparql/
+      - VITE_KEYCLOAK_ENABLE_LOGIN=false
+      - VITE_KEYCLOAK_REALM=piveau
+      - VITE_KEYCLOAK_URL=https://keycloak-piveau.apps.osc.fokus.fraunhofer.de/auth
+      - VITE_ROUTER_OPTIONS_BASE=/
+      - VITE_ROUTING_NAVIGATION_SHOW_SPARQL=true
+      - OTEL_SDK_DISABLED=true
+      - VITE_METADATA_TITLE=QUADRIGA Portal
+      - VITE_TITLE=QUADRIGA
+
+  piveau-metrics-ui:
+    # build: ../../rdi-piveau-metrics-ui
+    environment: !override
+      - VUE_APP_METADATA_TITLE=QUADRIGA Portal
+      - VUE_APP_TITLE=QUADRIGA
+      - VUE_APP_ROOT_API=http://127.0.0.1:8181/
+      - VUE_APP_DATA_URL=http://127.0.0.1:8082/
+      - VUE_APP_REPORT_URL=http://127.0.0.1:8188/
+      - VUE_APP_ROOT_URL=https://data.europa.eu/mqa
+      - VUE_APP_SHACL_VALIDATOR_URL=https://data.europa.eu/mqa/shacl-validator-ui/
+      - VUE_APP_SHACL_API_URL=https://data.europa.eu/api/mqa/shacl
+      - VUE_APP_TRACKER_IS_PIWIK_PRO=false
+      - VUE_APP_TRACKER_TRACKER_URL=
+      - VUE_APP_TRACKER_SITE_ID=
+      - VUE_APP_MATOMO_URL=
+      - VUE_APP_PIWIK_ID=
+      - VUE_APP_SCORING_START_DATE=2020-01-24
+      - VUE_APP_SCORING_STEP_SIZE=10
+      - VUE_APP_SCORING_MAX_POINTS=200
+      - VUE_APP_HISTORY_START_DATE=2020-01-24
+      - VUE_APP_HISTORY_RESOLUTION=month
+      - VUE_APP_COOKIE_DECLINE_LINK=
+      - VUE_APP_LANGUAGES_LOCALE=en
+      - VUE_APP_LANGUAGES_FALLBACK_LOCALE=en
+      - VUE_APP_LANGUAGES_LANGUAGE_OBJECT={}
+      - VUE_APP_LANGUAGES_USE_LANGUAGE_SELECTOR=true
+      - VUE_APP_HEADER_METADATA_QUALITY_SHOW=false
+      - VUE_APP_HEADER_METADATA_QUALITY_HREF=
+      - VUE_APP_HEADER_SPARQL_SHOW=false
+      - VUE_APP_HEADER_SPARQL_HREF=
+      - VUE_APP_HEADER_CATALOGUES_SHOW=true
+      - VUE_APP_HEADER_CATALOGUES_HREF=http://localhost:8080/catalogues
+      - VUE_APP_HEADER_DATASETS_SHOW=true
+      - VUE_APP_HEADER_DATASETS_HREF=http://localhost:8080/datasets
+
+  piveau-consus-scheduling:
+    ports: !override
+      - 8090:8080
+      - 8095:8085
+      - 15000:5000
+
+  piveau-hub-repo:
+    # build: ../../piveau-hub-repo/
+    environment: !override
+      - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"http://localhost:8080/","datasetContext":"datasets/","catalogueContext":"catalogues/","distributionContext":"distribution/","historyMetricsContext":"id/history_metrics/","metricsContext":"id/metrics/","recordContext":"set/record/"}
+      # - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"http://localhost:8080/","datasetContext":"datasets/"}
+      - PIVEAU_HUB_SEARCH_SERVICE={"enabled":true,"url":"piveau-hub-search","port":8080,"api_key":"yourSearchApiKey"}
+      - PIVEAU_HUB_API_KEY=yourRepoApiKey
+      - PIVEAU_HUB_SHELL_CONFIG={"http":{},"telnet":{}}
+      - PIVEAU_HUB_VALIDATOR={"enabled":true,"metricsPipeName":"metrics","history":true}
+      - PIVEAU_TRIPLESTORE_CONFIG={"address":"http://virtuoso:8890","clearGeoDataCatalogues":["*"],"password":"dba"}
+      - JAVA_OPTS=-Xms1g -Xmx2g -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+      - PIVEAU_LOG_LEVEL=trace
+
+    ports: !override
+      - 8082:8080
+      - 8085:8085
+      - 15002:5000
+
+
+  piveau-metrics-cache:
+    # build: ../../piveau-metrics-cache
+    environment: !override
+      - MONGODB_CONNECTION=mongodb://mongo:27017
+      - CACHE_APIKEY=doesnotmatter
+      - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"http://localhost:8080/","datasetContext":"datasets/","catalogueContext":"catalogues/","distributionContext":"set/distribution/","historyMetricsContext":"id/history_metrics/","metricsContext":"id/metrics/","recordContext":"set/record/"}
+      - PIVEAU_TRIPLESTORE_CONFIG={"address":"http://virtuoso:8890", "password":"dba"}
+      - PIVEAU_HUB_AUTHORIZATION_PROCESS_DATA={}
+      - CACHE_CORS_DOMAINS=["localhost","quadriga.fokus.fraunhofer.de"]
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-hub-search:
+    ports: !override
+      - 8084:8080
+      - 8086:8081
+
+  virtuoso:
+    volumes:
+      - $HOME/.cache/piveau/virtuoso-quadriga:/database
+
+  elasticsearch:
+    volumes:
+      - $HOME/.cache/piveau/elasticsearch-quadriga:/usr/share/elasticsearch/data
+
+  mongo:
+    volumes:
+      - $HOME/.cache/piveau/mongo-quadriga:/etc/mongo
+
+  piveau-consus-importing-jupyterbook:
+    # build: ../../piveau-consus-importing-jupyterbook
+    container_name: piveau-consus-importing-jupyterbook

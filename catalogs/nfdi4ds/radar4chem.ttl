@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/radar4chem>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:title "NFDI4Chem RADAR4Chem"@de ;
+  dc:title "NFDI4Chem RADAR4Chem"@en ;
+  dc:description "RADAR4Chem Repository"@de ;
+  dc:description "RADAR4Chem Repository"@en ;
+  dc:type "dcat-ap"^^xsd:string .

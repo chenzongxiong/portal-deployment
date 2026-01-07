@@ -1,0 +1,155 @@
+services:
+  piveau-consus-importing-oaipmh:
+    image: dockerhub.fokus.fraunhofer.de:5000/piveau/consus/piveau-consus-importing-oaipmh
+    container_name: piveau-consus-importing-oaipmh
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xms100m -Xmx256m
+
+  piveau-importing-oaipmh-nfdi4cat:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi4cat/metaportal/harvester/piveau-importing-oaipmh-nfdi4cat
+    container_name: piveau-consus-importing-oaipmh-nfdi4cat
+    pull_policy: always
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    mem_limit: 500m
+    memswap_limit: 500m
+    environment:
+      - JAVA_OPTS=-Xms200m -Xmx500m -XX:+UseG1GC
+
+  piveau-consus-importing-github:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi/nfdi-importer/piveau-consus-importing-github
+    container_name: piveau-consus-importing-github
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xms100m -Xmx256m -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+
+  piveau-consus-importing-gitlab:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi/nfdi-importer/piveau-consus-importing-gitlab
+    container_name: piveau-consus-importing-gitlab
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xms100m -Xmx256m -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+
+  piveau-consus-importing-nomad:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi/nfdi-importer/piveau-consus-importing-nomad
+    container_name: piveau-consus-importing-nomad
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx256m -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+
+  piveau-consus-importing-youtube:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi/nfdi-importer/piveau-consus-importing-youtube
+    container_name: piveau-consus-importing-youtube
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xms128m -Xmx256m -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+
+  piveau-consus-scheduling:
+    volumes:
+      - ../pipes/nfdi4ds:/usr/verticles/pipes
+
+  piveau-hub-repo:
+    volumes:
+      - ../pipes/nfdi4ds:/usr/verticles/pipes
+    environment:
+      - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"https://meta4ds.fokus.fraunhofer.de/","datasetContext":"datasets/","catalogueContext":"catalogues/","distributionContext":"distribution/","historyMetricsContext":"id/history_metrics/","metricsContext":"id/metrics/","recordContext":"set/record/"}
+      - PIVEAU_HUB_SEARCH_SERVICE={"enabled":true,"url":"piveau-hub-search","port":8080,"api_key":"yourSearchApiKey"}
+      - PIVEAU_HUB_API_KEY=yourRepoApiKey
+      - PIVEAU_HUB_SHELL_CONFIG={"http":{},"telnet":{}}
+      - PIVEAU_HUB_VALIDATOR={"enabled":true,"metricsPipeName":"metrics","history":true}
+      - PIVEAU_TRIPLESTORE_CONFIG={"address":"http://virtuoso:8890","clearGeoDataCatalogues":["*"],"password":"dba"}
+      - PIVEAU_SHADOW_TRIPLESTORE_CONFIG={"address":"http://virtuoso-shadow:8890","clearGeoDataCatalogues":["*"],"password":"dba"}
+      - JAVA_OPTS=-Xms1g -Xmx2g -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+      - PIVEAU_HUB_LOG_LEVEL=trace
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-metrics-cache:
+    environment: !override
+      - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"https://meta4ds.fokus.fraunhofer.de/","datasetContext":"datasets/","catalogueContext":"catalogues/","distributionContext":"distribution/","historyMetricsContext":"id/history_metrics/","metricsContext":"id/metrics/","recordContext":"set/record/"}
+      - MONGODB_CONNECTION=mongodb://mongo:27017
+      - CACHE_APIKEY=doesnotmatter
+      - PIVEAU_TRIPLESTORE_CONFIG={"address":"http://virtuoso:8890", "password":"dba"}
+      - PIVEAU_HUB_AUTHORIZATION_PROCESS_DATA={}
+      - CACHE_CORS_DOMAINS=["localhost","meta4ds.fokus.fraunhofer.de","nfdi4dsmetaportal.fokus.fraunhofer.de"]
+      - JAVA_OPTS=-Xms1g -Xmx2g
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-hub-ui:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi/rdi-piveau-hub-ui:nfdi4ds
+    container_name: piveau-hub-ui
+    restart: unless-stopped
+    pull_policy: always
+    logging:
+      options:
+        max-size: "50m"
+    ports:
+      - 8080:8080
+    environment:
+      - VITE_TITLE=NFDI4DataScience
+      - VITE_METADATA_TITLE=NFDI4DataScience
+      - VITE_API_BASE_URL=https://meta4ds.fokus.fraunhofer.de/search/
+      - VITE_API_UPLOAD_BASE_URL=
+      - VITE_KEYCLOAK_ENABLE_LOGIN=false
+      - VITE_KEYCLOAK_REALM=piveau
+      - VITE_KEYCLOAK_URL=
+      - VITE_ROUTER_OPTIONS_BASE=/
+      - VITE_ROUTING_NAVIGATION_SHOW_SPARQL=true
+      - VITE_API_HUB_URL=https://meta4ds.fokus.fraunhofer.de/api/hub/
+      - VITE_API_QUALITY_BASE_URL=https://meta4ds.fokus.fraunhofer.de/api/cache/
+      - VITE_API_SIMILARITY_BASE_URL=https://meta4ds.fokus.fraunhofer.de/api/similarities/
+      - VITE_API_SPARQL_URL=https://meta4ds.fokus.fraunhofer.de/sparql/
+      - VITE_LANGUAGES_LOCALE=en
+      - VITE_LANGUAGES_LANGUAGE_OBJECT={}
+      - VITE_LANGUAGES_USE_LANGUAGE_SELECTOR=true
+      - OTEL_SDK_DISABLED=true
+
+  piveau-metrics-ui:
+    image: dockerhub.fokus.fraunhofer.de:5000/nfdi/rdi-piveau-metrics-ui:nfdi4ds
+    environment: !override
+      - VUE_APP_ROOT_API=https://meta4ds.fokus.fraunhofer.de/api/cache/
+      - VUE_APP_DATA_URL=https://meta4ds.fokus.fraunhofer.de/api/hub/datasets
+      - VUE_APP_REPORT_URL=https://meta4ds.fokus.fraunhofer.de/api/reporter/
+      - VUE_APP_ROOT_URL=https://data.europa.eu/mqa
+      - VUE_APP_SHACL_VALIDATOR_URL=https://data.europa.eu/mqa/shacl-validator-ui/
+      - VUE_APP_SHACL_API_URL=https://data.europa.eu/api/mqa/shacl
+      - VUE_APP_TRACKER_IS_PIWIK_PRO=false
+      - VUE_APP_TRACKER_TRACKER_URL=
+      - VUE_APP_TRACKER_SITE_ID=
+      - VUE_APP_MATOMO_URL=
+      - VUE_APP_PIWIK_ID=
+      - VUE_APP_SCORING_START_DATE=2020-01-24
+      - VUE_APP_SCORING_STEP_SIZE=10
+      - VUE_APP_SCORING_MAX_POINTS=200
+      - VUE_APP_HISTORY_START_DATE=2020-01-24
+      - VUE_APP_HISTORY_RESOLUTION=month
+      - VUE_APP_COOKIE_DECLINE_LINK=
+      - VUE_APP_LANGUAGES_LOCALE=en
+      - VUE_APP_LANGUAGES_FALLBACK_LOCALE=en
+      - VUE_APP_LANGUAGES_LANGUAGE_OBJECT={}
+      - VUE_APP_LANGUAGES_USE_LANGUAGE_SELECTOR=true
+      - VUE_APP_HEADER_METADATA_QUALITY_SHOW=true
+      - VUE_APP_HEADER_METADATA_QUALITY_HREF=https://meta4ds.fokus.fraunhofer.de/mqa/
+      - VUE_APP_HEADER_SPARQL_SHOW=true
+      - VUE_APP_HEADER_SPARQL_HREF=https://meta4ds.fokus.fraunhofer.de/sparql/
+      - VUE_APP_HEADER_CATALOGUES_SHOW=true
+      - VUE_APP_HEADER_CATALOGUES_HREF=https://meta4ds.fokus.fraunhofer.de/catalogues/
+      - VUE_APP_HEADER_DATASETS_SHOW=true
+      - VUE_APP_HEADER_DATASETS_HREF=https://meta4ds.fokus.fraunhofer.de/datasets/

@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/github-nfdi4microbiota>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4Microbiota GitHub"@de ;
+  dc:title "NFDI4Microbiota GitHub"@en ;
+  dc:description "GitHub-Repositories für NFDI4Microbiota"@de ;
+  dc:description "GitHub repositories for NFDI4Microbiota"@en ;
+  dc:type "dcat-ap"^^xsd:string .

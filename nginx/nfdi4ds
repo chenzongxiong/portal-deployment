@@ -1,0 +1,116 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    http2 on;
+
+    server_name nfdi4dsmetaportal.fokus.fraunhofer.de;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+
+    gzip off;
+
+    # modern configuration
+    ssl_protocols TLSv1.3;
+    ssl_prefer_server_ciphers off;
+
+    # HSTS (ngx_http_headers_module is required) (63072000 seconds)
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+    keepalive_requests 1000;
+    http2_max_concurrent_streams 128;
+
+    # OCSP stapling
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    server_name nfdi4dsmetaportal.fokus.fraunhofer.de meta4ds.fokus.fraunhofer.de;
+
+    ssl_certificate /etc/ssl/certs/nfdi4dsmetaportal.fokus.fraunhofer.de_cert_with_chain.pem;
+    ssl_certificate_key /etc/ssl/private/nfdi4dsmetaportal_sec_key.pem;
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+    ssl_session_tickets off;
+
+    add_header  X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options nosniff;
+    # Hides the header
+    proxy_hide_header 'Access-Control-Allow-Origin';
+
+    # Sets the new value
+    add_header Access-Control-Allow-Origin https://nfdi4dsmetaportal.fokus.fraunhofer.de;
+
+    proxy_set_header    X-Real-IP           $remote_addr;
+    proxy_set_header    X-Forwarded-Host    $host;
+    proxy_set_header    X-Forwarded-Server  $host;
+    proxy_set_header    X-Forwarded-Proto   $scheme;
+    proxy_set_header    X-Forwarded-For     $remote_addr;
+
+    proxy_set_header Host $host;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_http_version 1.1;
+    proxy_redirect off;
+
+#    location /conductor/ {
+#        rewrite ^/conductor/(.*)$  /conductor/$1 break;
+#        proxy_pass http://localhost:8890;
+#    }
+
+    location /mqa/ {
+        proxy_pass http://localhost:8180/;
+    }
+
+    location /sparql/ {
+        rewrite ^/sparql/(.*)$  /sparql/$1 break;
+        proxy_pass http://localhost:8890;
+    }
+
+    location /search/ {
+        rewrite ^/search/(.*)$  /$1 break;
+        proxy_pass http://localhost:8084/search;
+    }
+
+    location /api/hub/ {
+        rewrite ^/api/hub/(.*)$  /$1 break;
+        proxy_pass http://localhost:8082;
+    }
+
+    location /api/search/ {
+        rewrite ^/api/search/(.*)$  /$1 break;
+        proxy_pass http://localhost:8084;
+    }
+
+    location /api/scheduling/ {
+        rewrite ^/api/scheduling/(.*)$  /$1 break;
+        proxy_pass http://localhost:8090;
+    }
+
+    location /api/similarities/ {
+        rewrite ^/api/similarities/(.*)$  /$1 break;
+        proxy_pass http://localhost:8187;
+    }
+
+    location /api/cache/ {
+        rewrite ^/api/cache/(.*)$  /$1 break;
+        proxy_pass http://localhost:8181;
+    }
+
+    location /api/reporter/ {
+        rewrite ^/api/reporter/(.*)$  /$1 break;
+        proxy_pass http://localhost:8188;
+    }
+
+    location / {
+        rewrite ^/(.*)$   /$1 break;
+        proxy_pass http://localhost:8080;
+    }
+
+    location ~ /\.(.*)/?(.*)? {
+        return 404;
+    }
+}

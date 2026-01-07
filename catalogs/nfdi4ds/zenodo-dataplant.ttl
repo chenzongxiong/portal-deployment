@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/zenodo-dataplant>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "DataPLANT Zenodo"@de ;
+  dc:title "DataPLANT Zenodo"@en ;
+  dc:description "Zenodo Untegruppe für DataPLANT"@de ;
+  dc:description "Zenodo Subgroup for DataPLANT"@en ;
+  dc:type "dcat-ap"^^xsd:string .

@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/zenodo-nfdi4immuno>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:title "NFDI4Immuno Zenodo"@de ;
+  dc:title "NFDI4Immuno Zenodo"@en ;
+  dc:description "Zenodo Untegruppe für NFDI4Immuno"@de ;
+  dc:description "Zenodo Subgroup for NFDI4Immuno"@en ;
+  dc:type "dcat-ap"^^xsd:string .

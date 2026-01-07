@@ -1,0 +1,17 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-nfdi4memory>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:title "NFDI4Memory YouTube"@de ;
+  dc:title "NFDI4Memory YouTube"@en ;
+  dc:description "NFDI4Memory ist eines von mehreren Konsortien in Deutschland, die gemeinsam den Aufbau einer langfristigen und nachhaltigen Forschungsdateninfrastruktur für das digitale Zeitalter vorantreiben. Es vereint Partner mit gemeinsamen Interessen, Bedürfnissen und Zielen im Hinblick auf die besonderen Herausforderungen jener Disziplinen, die historische Methoden anwenden oder auf Daten angewiesen sind, die eine historische Kontextualisierung erfordern.
+
+Dieser Kanal wird von NFDI 4Memory betrieben. Weitere Informationen finden Sie im Impressum."@de ;
+  dc:description "NFDI4Memory is one of several consortia within Germany that will jointly manage the creation of a longterm and sustainable research data infrastructure for the digital age. It brings together partners united by a common set of interests, needs, and aims related to the distinct challenges faced by those disciplines that use historical methods or that rely on data requiring historical contextualization.
+
+This channel is operated by NFDI 4Memory. For all further information see imprint."@en ;
+  dc:type "dcat-ap"^^xsd:string .

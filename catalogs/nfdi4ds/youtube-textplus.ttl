@@ -1,0 +1,17 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-textplus>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "Text+ YouTube"@de ;
+  dc:title "Text+ YouTube"@en ;
+  dc:description "Video-Kanal des NFDI Konsortiums Text+
+
+Kontaktdaten und mehr Infos auf unserer Webseite: https://www.text-plus.org"@de ;
+  dc:description "Video channel of the NFDI Consortium Text+
+
+Contact details and more information on our website: https://www.text-plus.org"@en ;
+  dc:type "dcat-ap"^^xsd:string .

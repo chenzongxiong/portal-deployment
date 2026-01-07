@@ -1,0 +1,166 @@
+services:
+  piveau-consus-transforming-xslt:
+    image: dockerhub.fokus.fraunhofer.de:5000/piveau/consus/piveau-consus-transforming-xslt:latest
+    container_name: piveau-consus-transforming-xslt
+    logging:
+      options:
+        max-size: "50m"
+    restart: unless-stopped
+    environment:
+      - OTEL_SDK_DISABLED=true
+      - JAVA_OPTS=-Xms200m -Xmx500m -XX:+UseG1GC
+    volumes:
+      - ../scripts:/usr/verticles/scripts
+
+  piveau-consus-transforming-js:
+    image: registry.gitlab.com/piveau/consus/piveau-consus-transforming-js:3.2.3
+    container_name: piveau-consus-transforming-js
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    environment:
+      - JAVA_OPTS=-Xms200m -Xmx500m
+    volumes:
+      - ../scripts:/usr/verticles/scripts
+
+  piveau-consus-exporting-hub:
+    image: registry.gitlab.com/piveau/consus/piveau-consus-exporting-hub:6.0.0
+    container_name: piveau-consus-exporting-hub
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    environment:
+      - JAVA_OPTS=-Xms200m -Xmx1g -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+      - PIVEAU_HUB_APIKEY=yourRepoApiKey
+      - OTEL_SDK_DISABLED=true
+      - PIVEAU_LOG_LEVEL=trace
+
+  piveau-consus-scheduling:
+    image: registry.gitlab.com/piveau/consus/piveau-consus-scheduling
+    container_name: piveau-consus-scheduling
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    ports:
+      - 8090:8080
+      - 8095:8085
+      - 5000:5000
+    environment:
+      - JAVA_OPTS=-Xms100m -Xmx200m
+      - PIVEAU_SHELL_CONFIG={"telnet":{},"http":{}}
+      - PIVEAU_LOG_LEVEL=trace
+      - OTEL_SDK_DISABLED=true
+
+  piveau-hub-repo:
+    image: registry.gitlab.com/piveau/hub/piveau-hub-repo
+    container_name: piveau-hub-repo
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    ports:
+      - 8082:8080
+      - 8085:8085
+      - 5002:5000
+    environment:
+      - PIVEAU_DCATAP_SCHEMA_CONFIG={"baseUri":"http://localhost:8080/","datasetContext":"datasets/","catalogueContext":"catalogues/","distributionContext":"distribution/","historyMetricsContext":"id/history_metrics/","metricsContext":"id/metrics/","recordContext":"set/record/"}
+      - PIVEAU_HUB_SEARCH_SERVICE={"enabled":true,"url":"piveau-hub-search","port":8080,"api_key":"yourSearchApiKey"}
+      - PIVEAU_HUB_API_KEY=yourRepoApiKey
+      - PIVEAU_HUB_SHELL_CONFIG={"http":{},"telnet":{}}
+      - PIVEAU_HUB_VALIDATOR={"enabled":true,"metricsPipeName":"metrics","history":true}
+      - PIVEAU_TRIPLESTORE_CONFIG={"address":"http://virtuoso:8890","clearGeoDataCatalogues":["*"],"password":"dba"}
+      - PIVEAU_SHADOW_TRIPLESTORE_CONFIG={"address":"http://virtuoso-shadow:9890","clearGeoDataCatalogues":["*"],"password":"dba"}
+      - JAVA_OPTS=-Xms1g -Xmx2g -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+      - PIVEAU_HUB_LOG_LEVEL=TRACE
+      - PIVEAU_LOG_LEVEL=TRACE
+    depends_on:
+      - piveau-hub-search
+      - virtuoso
+
+  piveau-hub-search:
+    image: registry.gitlab.com/piveau/hub/piveau-hub-search:5.1.8
+    container_name: piveau-hub-search
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    ports:
+      - 8084:8080
+      - 8086:8081
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    environment:
+      - PIVEAU_HUB_SEARCH_API_KEY=yourSearchApiKey
+      - PIVEAU_HUB_SEARCH_ES_CONFIG={"host":"elasticsearch","port":9200}
+      - PIVEAU_HUB_SEARCH_GAZETTEER_CONFIG={"url":"http://doesnotmatter.eu"}
+      - JAVA_OPTS=-Xms1g -Xmx2g -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+      - PIVEAU_LOG_LEVEL=trace
+
+  elasticsearch:
+    image: elasticsearch:7.17.2
+    container_name: elasticsearch
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: curl -s -f http://127.0.0.1:9200/_cat/health >/dev/null || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 60
+    environment:
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms2G -Xmx4G
+    volumes:
+      - /opt/elasticsearch/elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 127.0.0.1:9200:9200
+
+
+  virtuoso:
+    image: openlink/virtuoso-opensource-7:latest
+    container_name: virtuoso
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    environment:
+      - DBA_PASSWORD=dba
+      - VIRT_PARAMETERS_NUMBEROFBUFFERS=170000
+      - VIRT_PARAMETERS_MAXDIRTYBUFFERS=130000
+      - VIRT_PARAMETERS_SERVERTHREADS=100
+      - VIRT_HTTPSERVER_SERVERTHREADS=100
+      - VIRT_HTTPSERVER_MAXCLIENTCONNECTIONS=100
+    volumes:
+      - /opt/virtuoso/virtuoso-data:/database
+    ports:
+      - 127.0.0.1:8890:8890
+
+  virtuoso-shadow:
+    image: openlink/virtuoso-opensource-7:latest
+    container_name: virtuoso-shadow
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "50m"
+    environment:
+      - DBA_PASSWORD=dba
+      - VIRT_PARAMETERS_NUMBEROFBUFFERS=170000
+      - VIRT_PARAMETERS_MAXDIRTYBUFFERS=130000
+      - VIRT_PARAMETERS_SERVERTHREADS=100
+      - VIRT_HTTPSERVER_SERVERTHREADS=100
+      - VIRT_HTTPSERVER_MAXCLIENTCONNECTIONS=100
+    volumes:
+      - /opt/virtuoso-shallow/virtuoso-data:/database
+    ports:
+      - 127.0.0.1:9890:8890

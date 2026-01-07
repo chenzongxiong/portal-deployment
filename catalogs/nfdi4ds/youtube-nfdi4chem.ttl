@@ -1,0 +1,14 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/youtube-nfdi4chem>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "NFDI4Chem YouTube"@de ;
+  dc:title "NFDI4Chem YouTube"@en ;
+  dc:description "NFDI4Chem unterstützt Wissenschaftlerinnen und Wissenschaftler bei der Erfassung, Speicherung, Verarbeitung, Analyse, Offenlegung und Wiederverwendung von Forschungsdaten in der Chemie. Wir entwickeln und pflegen eine nationale Forschungsdateninfrastruktur für die Chemie in Deutschland und ermöglichen innovative Dienstleistungen und forschungsdatenbasierte Wissenschaft.
+VERBESSERN SIE IHRE DATEN!"@de ;
+  dc:description "NFDI4Chem will support scientists in their efforts to collect, store, process, analyse, disclose and re-use research data in Chemistry.  We develop and maintain a national research data infrastructure for the research domain of chemistry in Germany, and we enable innovative services and science based on research data. ENHANCE YOUR DATA!"@en ;
+  dc:type "dcat-ap"^^xsd:string .

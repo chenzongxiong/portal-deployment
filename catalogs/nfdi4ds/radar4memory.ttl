@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/radar4memory>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:title "NFDI4Memory RADAR4Memory"@de ;
+  dc:title "NFDI4Memory RADAR4Memory"@en ;
+  dc:description "RADAR4Memory hilft Ihnen, Ihre Forschungsdaten aus dem Bereich der historisch arbeitenden Geisteswissenschaften so einfach wie möglich zu publizieren – ohne Komfort, Datensicherheit oder rechtliche Aspekte zu vernachlässigen. Und das kostenfrei!"@de ;
+  dc:description "RADAR4Memory helps you to publish your research data in the historical sciences and other disciplines that work with historical data as easily as possible - without neglecting convenience, data security or legal aspects. And it's free!"@en ;
+  dc:type "dcat-ap"^^xsd:string .

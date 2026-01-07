@@ -1,0 +1,13 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://meta4ds.fokus.fraunhofer.de/catalogues/github-base4nfdi>
+  a dcat:Catalog ;
+  dc:language <http://publications.europa.eu/resource/authority/language/ENG> ;
+  dc:language <http://publications.europa.eu/resource/authority/language/DEU> ;
+  dc:title "Base4NFDI GitHub"@de ;
+  dc:title "Base4NFDI GitHub"@en ;
+  dc:description "Aufbau grundlegender Dienste für FAIR-Forschung in der NFDI und darüber hinaus."@de ;
+  dc:description "Building basic services for FAIR research in the NFDI and beyond."@en ;
+  dc:type "dcat-ap"^^xsd:string .
