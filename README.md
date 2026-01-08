@@ -4,7 +4,17 @@ This is the folder aimed to make development and deployment flexible across diff
 
 ## Quick Start (in development mode)
 ```
+    mkdir -p $HOME/.cache/piveau/virtuoso-nfdi4ds
+    mkdir -p $HOME/.cache/piveau/virtuoso-shadow-nfdi4ds
+    mkdir -p $HOME/.cache/piveau/elasticsearch-nfdi4ds
+    mkdir -p $HOME/.cache/piveau/mongo-nfdi4ds
+
+    chmod -R 777 $HOME/.cache/piveau
+
     docker-compose -f production/common.yml -f production/metrics.yml -f production/nfdi4ds.yml -f development/dev.nfdi4ds-quickstart.yml up -d
+    # Before running the following command, please ensure the healthy of elasticsearch service
+
+    docker ps |grep elasticsearch  # check "healthy" in the console
 
     # create all possible catalogs
    ./run.sh -p nfdi4ds -c create_catalogs --skip-dry-run --dev
