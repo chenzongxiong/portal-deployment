@@ -1,6 +1,6 @@
 services:
   piveau-consus-importing-oaipmh:
-    image: dockerhub.fokus.fraunhofer.de:5000/piveau/consus/piveau-consus-importing-oaipmh
+    image: registry.gitlab.com/piveau/consus/piveau-consus-importing-oaipmh
     container_name: piveau-consus-importing-oaipmh
     logging:
       options:

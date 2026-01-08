@@ -1,6 +1,6 @@
 services:
   piveau-consus-transforming-xslt:
-    image: dockerhub.fokus.fraunhofer.de:5000/piveau/consus/piveau-consus-transforming-xslt:latest
+    image: registry.gitlab.com/piveau/consus/piveau-consus-transforming-xslt:latest
     container_name: piveau-consus-transforming-xslt
     logging:
       options:
