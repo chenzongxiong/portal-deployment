@@ -2,7 +2,7 @@
 
 This is the folder aimed to make development and deployment flexible across different piveau-based projects, e.g. NFDI4DS, QUADRIGA, etc.
 
-## Quick Start (in development mode)
+## Quick Start (in development mode), linux and mac only
 ```
     mkdir -p $HOME/.cache/piveau/virtuoso-nfdi4ds
     mkdir -p $HOME/.cache/piveau/virtuoso-shadow-nfdi4ds
@@ -36,7 +36,42 @@ This is the folder aimed to make development and deployment flexible across diff
     #     "startTime" : "2026-01-07T23:41:35.759+00:00"
     #   }
     # }
+
+   # locate http://localhost:8080 in browser
 ```
+## Quick Start in Window System
+Run the following commands in folder **portal-deployment**
+```
+    docker-compose -f production/common.yml -f production/metrics.yml -f production/nfdi4ds.yml -f development/dev.nfdi4ds-quickstart.yml up -d
+    # Before running the following command, please ensure the healthy of elasticsearch service
+
+    docker ps   # check "healthy" of elasticsearch in the console
+
+    # create catalog, ensure you are in folder portal-deployment
+    curl.exe -v -XPUT -H "X-API-Key: yourRepoApiKey" -H "Content-Type: text/turtle" --data "@catalogs/nfdi4ds/zenodo-ghga.ttl" "http://127.0.0.1:8082/catalogues/zenodo-ghga"
+    # check the http code is in [200,300)
+   
+    # connect to piveau-consus-scheduling telnet server
+    # open http://localhost:8095/shell.html in browser, don't confuse with piveau-hub-repo shell, we need piveau-consus-scheduling
+    > pipes # show the registered pipes
+    > launch zenodo-ghga # trigger the pipe to harvest metadata from zenodo
+    # Expected output
+    # {
+    #   "status" : "active",
+    #   "pipeHeader" : {
+    #     "id" : "963f71f4-0595-4a36-a444-462649ff126e",
+    #     "name" : "zenodo-ghga",
+    #     "title" : "Harvester - GHGA Zenodo",
+    #     "version" : "2.0.0",
+    #     "transport" : "payload",
+    #     "runId" : "zenodo-ghga~f5e28098-a020-4992-96cf-5148961c6110",
+    #     "startTime" : "2026-01-07T23:41:35.759+00:00"
+    #   }
+    # }
+
+   # locate http://localhost:8080 in browser
+```
+
 
 
 ## Service endpoints
