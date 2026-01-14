@@ -17,8 +17,6 @@ services:
       options:
         max-size: "50m"
     restart: unless-stopped
-    mem_limit: 500m
-    memswap_limit: 500m
     environment:
       - JAVA_OPTS=-Xms200m -Xmx500m -XX:+UseG1GC
 

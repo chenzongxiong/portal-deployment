@@ -124,19 +124,3 @@ services:
     ports: !override
       - 8084:8080
       - 8086:8081
-
-  virtuoso:
-    volumes:
-      - $HOME/.cache/piveau/virtuoso-nfdi4ds:/database
-
-  virtuoso-shadow:
-    volumes:
-      - $HOME/.cache/piveau/virtuoso-shadow-nfdi4ds:/database
-
-  elasticsearch:
-    volumes:
-      - $HOME/.cache/piveau/elasticsearch-nfdi4ds:/usr/share/elasticsearch/data
-
-  mongo:
-    volumes:
-      - $HOME/.cache/piveau/mongo-nfdi4ds:/etc/mongo
